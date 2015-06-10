@@ -1,6 +1,7 @@
 
 var _MSG_INTRODUCTION    = "MSG_Action_Introduction";
 
+
 var WebRocketApplication = IApplication.$extend(
 {
     __init__ : function()
@@ -14,6 +15,23 @@ var WebRocketApplication = IApplication.$extend(
 
         // Introduce client app to the server
         this.entity.exec(EntityAction.Server, _MSG_INTRODUCTION);
+
+
+        // Load additional script files (accessable globally)
+        IApplication.loadDependencies(this, 
+            "scripts/ubihotspots-statistics-connector.js")
+        .done(function()
+        {
+            this.onDependenciesLoaded();
+        }.bind(this));
+    },
+
+    onDependenciesLoaded : function()
+    {
+        console.log("Dependencies Loaded");
+        console.log("test 123: ",tester());
+
+        getUbiStatsClicks(1,1,1);
     },
 
     /** 
