@@ -1,0 +1,13 @@
+{
+    "Name": "DualRealityOulu",
+    "Description": "UBISS 2015 Workshop D - Team Gamma: Dual Reality Oulu Prototype",
+    "Txml": "virtual_oulu_scene.txml",
+    "Img": "application.jpg",
+    "SourceDir": "",
+    "SourceWebRocket": "app-web-rocket.webrocketjs",
+    "SourceRocket": "app-server-and-rocket.js",
+    "CompatibleWebRocket": true,
+    "CompatibleRocket": false,
+    "CompatibleServer": true,
+    "Layers": []
+}
