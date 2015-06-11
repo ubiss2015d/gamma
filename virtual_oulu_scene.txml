@@ -1,5 +1,28 @@
 <!DOCTYPE Scene>
 <scene>
+
+ <entity id="28" sync="true">
+  <component typeId="26" type="Name" sync="true">
+   <attribute value="AdminoAvatarManager" type="string" id="name" name="Name"/>
+   <attribute value="" type="string" id="description" name="Description"/>
+   <attribute value="" type="string" id="group" name="Group"/>
+  </component>
+  <component typeId="5" type="Script" sync="true">
+   <attribute value="http://meshmoon.data.s3.amazonaws.com/app/spinningwire/avatar-manager-deploy.js" type="AssetReferenceList" id="scriptRef" name="Script ref"/>
+   <attribute value="true" type="bool" id="runOnLoad" name="Run on load"/>
+   <attribute value="0" type="int" id="runMode" name="Run mode"/>
+   <attribute value="" type="string" id="applicationName" name="Script application name"/>
+   <attribute value="" type="string" id="className" name="Script class name"/>
+  </component>
+  <component typeId="25" type="DynamicComponent" sync="true" name="AdminotechApplicationSettings">
+   <attribute value="1" type="real" id="Spawn z" name="Spawn z"/>
+   <attribute value="1.1" type="real" id="Spawn y" name="Spawn y"/>
+   <attribute value="-13" type="real" id="Spawn x" name="Spawn x"/>
+   <attribute value="-90" type="real" id="Spawn rotation" name="Spawn rotation"/>
+   <attribute value="http://meshmoon.data.s3.amazonaws.com/app/spinningwire/avatar-creator/avatar/Avatar-man.xml" type="string" id="Forced avatar appearance" name="Forced avatar appearance"/>
+  </component>
+ </entity>
+
  <entity id="1" sync="true">
   <component typeId="26" type="Name" sync="true">
    <attribute value="b1_30_LP" type="string" id="name" name="Name"/>
@@ -16,7 +39,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="135.979996,6.92999983,-132.639999,-0,-32.4000015,1.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
+   <attribute value="135.979996,2.92999983,-132.639999,-0,-32.4000015,1.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -40,7 +63,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-16.9099998,5.94097996,-122.480003,-0,-33.327919,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-16.9099998,2.94097996,-122.480003,-0,-33.327919,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -64,7 +87,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-50.7999992,21.4400005,-244.059998,0,-0,0,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-50.7999992,5.4400005,-244.059998,0,-0,0,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -88,7 +111,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-211.199997,24.0699997,35.4799995,-0,-33.0810051,1.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-211.199997,5.0699997,35.4799995,-0,-33.0810051,1.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -112,7 +135,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-383.279999,30.4200001,88.3499985,-0,-32.6399994,1.99999999e-006,1.10000002,1.10000002,1.10000002" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-383.279999,5.4200001,88.3499985,-0,-32.6399994,1.99999999e-006,1.10000002,1.10000002,1.10000002" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -136,7 +159,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-471.940002,7.61000013,-369.529999,0,0,0,1,1,1" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-471.940002,3.61000013,-369.529999,0,0,0,1,1,1" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -160,7 +183,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-314.459991,15.5699997,-395.079987,-9.99999997e-007,-32.2700005,1.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-314.459991,4.5699997,-395.079987,-9.99999997e-007,-32.2700005,1.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -184,7 +207,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-177.5,20.4617996,-234.089996,-1.99999999e-006,56.9439354,-3.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-177.5,4.4617996,-234.089996,-1.99999999e-006,56.9439354,-3.99999999e-006,1.04999995,1.04999995,1.04999995" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -208,7 +231,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-106.050003,8.03999996,-86.2099991,-0,-32.1500015,1.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-106.050003,4.03999996,-86.2099991,-0,-32.1500015,1.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -232,7 +255,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-82.3300018,14.25,-121.510002,-1.99999999e-006,57.0725517,-3.99999999e-006,1.00999999,1.02999997,1.00999999" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-82.3300018,3.25,-121.510002,-1.99999999e-006,57.0725517,-3.99999999e-006,1.00999999,1.02999997,1.00999999" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -256,7 +279,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-80.8300018,10.1000004,-20.1599998,-0,-32.0299988,1.99999999e-006,1.01999998,1.20000005,1.01999998" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-80.8300018,4.1000004,-20.1599998,-0,-32.0299988,1.99999999e-006,1.01999998,1.20000005,1.01999998" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -280,7 +303,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-129.529999,16.3644009,48.3400002,-0,-33,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-129.529999,4.3644009,48.3400002,-0,-33,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -304,7 +327,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-224.029999,6.70617008,187.509995,-1.99999999e-006,58.5999985,-3.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-224.029999,5.70617008,187.509995,-1.99999999e-006,58.5999985,-3.99999999e-006,1.01999998,1.01999998,1.01999998" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -328,7 +351,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-94.8399963,7.5999999,243.419998,-0,-32.7770233,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-94.8399963,6.5999999,243.419998,-0,-32.7770233,1.99999999e-006,1.02999997,1.02999997,1.02999997" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -352,7 +375,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="-24.8099995,8.03999996,151.559998,-1.99999999e-006,58.1699982,-3.99999999e-006,1.01999998,1.14999998,1.01999998" type="Transform" id="transform" name="Transform"/>
+   <attribute value="-24.8099995,7.03999996,151.559998,-1.99999999e-006,58.1699982,-3.99999999e-006,1.01999998,1.14999998,1.01999998" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -376,7 +399,7 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
   <component typeId="20" type="Placeable" sync="true">
-   <attribute value="35.5600014,9.44999981,6.34000015,-0,-32.5,1.99999999e-006,1.00999999,1.00999999,1.00999999" type="Transform" id="transform" name="Transform"/>
+   <attribute value="35.5600014,8.44999981,6.34000015,-0,-32.5,1.99999999e-006,1.00999999,1.00999999,1.00999999" type="Transform" id="transform" name="Transform"/>
    <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
    <attribute value="true" type="bool" id="visible" name="Visible"/>
    <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
@@ -614,6 +637,42 @@
    <attribute value="1" type="int" id="runMode" name="Run mode"/>
    <attribute value="" type="string" id="applicationName" name="Script application name"/>
    <attribute value="" type="string" id="className" name="Script class name"/>
+  </component>
+ </entity>
+ <entity id="27" sync="true">
+  <component typeId="26" type="Name" sync="true">
+   <attribute value="ground" type="string" id="name" name="Name"/>
+   <attribute value="" type="string" id="description" name="Description"/>
+   <attribute value="" type="string" id="group" name="Group"/>
+  </component>
+  <component typeId="20" type="Placeable" sync="true">
+   <attribute value="0,1,0,0,0,0,1,1,1" type="Transform" id="transform" name="Transform"/>
+   <attribute value="false" type="bool" id="drawDebug" name="Show bounding box"/>
+   <attribute value="true" type="bool" id="visible" name="Visible"/>
+   <attribute value="1" type="int" id="selectionLayer" name="Selection layer"/>
+   <attribute value="" type="EntityReference" id="parentRef" name="Parent entity ref"/>
+   <attribute value="" type="string" id="parentBone" name="Parent bone name"/>
+  </component>
+  <component typeId="23" type="RigidBody" sync="true">
+   <attribute value="0" type="real" id="mass" name="Mass"/>
+   <attribute value="0" type="int" id="shapeType" name="Shape type"/>
+   <attribute value="1500 1 1500" type="float3" id="size" name="Size"/>
+   <attribute value="" type="AssetReference" id="collisionMeshRef" name="Collision mesh ref"/>
+   <attribute value="0.5" type="real" id="friction" name="Friction"/>
+   <attribute value="0" type="real" id="restitution" name="Restitution"/>
+   <attribute value="0" type="real" id="linearDamping" name="Linear damping"/>
+   <attribute value="0" type="real" id="angularDamping" name="Angular damping"/>
+   <attribute value="1 1 1" type="float3" id="linearFactor" name="Linear factor"/>
+   <attribute value="1 1 1" type="float3" id="angularFactor" name="Angular factor"/>
+   <attribute value="false" type="bool" id="kinematic" name="Kinematic"/>
+   <attribute value="false" type="bool" id="phantom" name="Phantom"/>
+   <attribute value="true" type="bool" id="drawDebug" name="Draw Debug"/>
+   <attribute value="0 0 0" type="float3" id="linearVelocity" name="Linear velocity"/>
+   <attribute value="0 0 0" type="float3" id="angularVelocity" name="Angular velocity"/>
+   <attribute value="-1" type="int" id="collisionLayer" name="Collision Layer"/>
+   <attribute value="-1" type="int" id="collisionMask" name="Collision Mask"/>
+   <attribute value="0.5" type="real" id="rollingFriction" name="Rolling friction"/>
+   <attribute value="true" type="bool" id="useGravity" name="Use gravity"/>
   </component>
  </entity>
 </scene>
