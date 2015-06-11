@@ -29,7 +29,6 @@ var WebRocketApplication = IApplication.$extend(
     onDependenciesLoaded : function()
     {
         console.log("Dependencies Loaded");
-        console.log("test 123: ",tester());
 
         // get ubi stats
         //getUbiStatsClicks(1,1,1);

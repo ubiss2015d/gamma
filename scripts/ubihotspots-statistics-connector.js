@@ -2,11 +2,6 @@
  * UBI Hotspot Statistics API: http://stats.ubioulu.fi/hotspots/index.php
  */
 
-function tester()
-{
-    return { status: "test" };
-}
-
 // encode a given url
 // compatible suffix: .json
 function encodeURLForMeshmoonProject(url, suffix)
