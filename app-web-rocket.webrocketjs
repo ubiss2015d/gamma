@@ -16,26 +16,32 @@ var WebRocketApplication = IApplication.$extend(
         // Introduce client app to the server
         this.entity.exec(EntityAction.Server, _MSG_INTRODUCTION);
 		
+        /*
 		// Run RTS camera application
         this.rts = {};
         this.rts.ent = Tundra.client.runApplication("RTS", "meshmoon-applications://meshmoon/rts-camera/rts-camera.webrocketjs");
         this.rts.ent.script.onScriptStarted(function(entity, component, scriptAsset, app) {
         this.rts.app = app;
-			
+		*/
+
         // Load additional script files (accessable globally)
         IApplication.loadDependencies(this, 
             "scripts/ubihotspots-statistics-connector.js")
         .done(function()
         {
-            this.onDependenciesLoaded();
+            this.onUbiStatsConnectorLoaded();
         }.bind(this));
-    },
 
-    onDependenciesLoaded : function()
-    {
-        console.log("Dependencies Loaded");
-		
-		/* Run Meshmoon GEO at Oulu city center
+
+        // Load additional script files (accessable globally)
+        IApplication.loadDependencies(this, 
+            "scripts/tokbox-connector.js")
+        .done(function()
+        {
+            this.onTokboxConnectorLoaded();
+        }.bind(this));
+
+        /* Run Meshmoon GEO at Oulu city center
            You can change this coordinate to be anywhere in the world
            and Meshmoon GEO will do its best to visualize the location. */
         Tundra.plugins.meshmoonGeo.start({
@@ -45,18 +51,34 @@ var WebRocketApplication = IApplication.$extend(
  
         // Setup default environment
         Tundra.plugins.meshmoonGeo.setupEnvironment();
-		
-		console.log("parsing started.");
-		//getting json from json file.
-		var jsonData = Tundra.asset.requestAsset("hotspots.json");
+        
+        console.log("parsing started.");
+        //getting json from json file.
+        var jsonData = Tundra.asset.requestAsset("hotspots.json");
         jsonData.onCompleted(this, this.onAssetTransferCompleted);
-		
+    },
+
+    onDependenciesLoaded : function()
+    {
+        console.log("Dependencies Loaded");
+    },
+
+        onUbiStatsConnectorLoaded : function()
+    {
+        console.log("UBIStats Connector loaded");
+        
         // get ubi stats
         //getUbiStatsClicks(1,1,1);
         var hotspotInstanceId = "toripolliisi-1";
         getUbiStatsClicksLastDay(hotspotInstanceId);
         getUbiStatsServicesLastDay(hotspotInstanceId);
         getUbiStatsFacesLastDay(hotspotInstanceId);
+    },
+
+        onTokboxConnectorLoaded : function()
+    {
+        console.log("TOKBOX Connector loaded");
+        tokboxEstablishConnection();
     },
 
     /** 
@@ -79,14 +101,14 @@ var WebRocketApplication = IApplication.$extend(
         this.ui.baseCSS = {
             "position" : "absolute",
             "padding"  : 25,
-            "top" : 25,
+            "top" : 150,
             "left" : 25,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
             "background-color" : "rgba(8,149,195,0.8)"
         };
 
-        this.ui.welcome = $("<div/>", { text : "Welcome to the 'DualRealityOulu' application" });
+        this.ui.welcome = $("<div/>", { text : "Welcome to the 'UbiPEAK' application" });
         this.ui.welcome.css(this.ui.baseCSS);
         this.ui.welcome.hide();
 
@@ -114,8 +136,13 @@ var WebRocketApplication = IApplication.$extend(
 			//getting the position from the hotspot json object.
 			var pos = Tundra.plugins.meshmoonGeo.coordinates.latLonToWorldPosition( parseFloat( obj.hotspots[i].lat ), parseFloat( obj.hotspots[i].lon ) );
 			//debugger;
-			console.log( "pos is ",pos);
+			console.log( "pos is ", pos);
 			
+
+            /* 2015-06-11 _ 22:27 _ Note Nico: This needs to be replaced by
+                the new UBI Hotspot Model (needs to be exported properly, according
+                to Meshmoon slides using blender2ogre plugin)
+            */
 			var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
  
             entity.name = "ent_"+i;

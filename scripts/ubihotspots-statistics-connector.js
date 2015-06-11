@@ -22,7 +22,6 @@ function performHttpRequest(url)
         console.log("GET JSON RETURN ", data);
     });
          
-
     /* API CALLS TO UBI HOTSPOTS APIT ARE NOT WORKING WITH THE MESHMOON PROXY 
     var myContext = { name : "MyContextObject", meshAsset : null, textAsset : null };
 
