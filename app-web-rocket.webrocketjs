@@ -15,8 +15,13 @@ var WebRocketApplication = IApplication.$extend(
 
         // Introduce client app to the server
         this.entity.exec(EntityAction.Server, _MSG_INTRODUCTION);
-
-
+		
+		// Run RTS camera application
+        this.rts = {};
+        this.rts.ent = Tundra.client.runApplication("RTS", "meshmoon-applications://meshmoon/rts-camera/rts-camera.webrocketjs");
+        this.rts.ent.script.onScriptStarted(function(entity, component, scriptAsset, app) {
+        this.rts.app = app;
+			
         // Load additional script files (accessable globally)
         IApplication.loadDependencies(this, 
             "scripts/ubihotspots-statistics-connector.js")
@@ -29,7 +34,23 @@ var WebRocketApplication = IApplication.$extend(
     onDependenciesLoaded : function()
     {
         console.log("Dependencies Loaded");
-
+		
+		/* Run Meshmoon GEO at Oulu city center
+           You can change this coordinate to be anywhere in the world
+           and Meshmoon GEO will do its best to visualize the location. */
+        Tundra.plugins.meshmoonGeo.start({
+            lat: 65.05932,
+            lon: 25.46629
+        });
+ 
+        // Setup default environment
+        Tundra.plugins.meshmoonGeo.setupEnvironment();
+		
+		console.log("parsing started.");
+		//getting json from json file.
+		var jsonData = Tundra.asset.requestAsset("hotspots.json");
+        jsonData.onCompleted(this, this.onAssetTransferCompleted);
+		
         // get ubi stats
         //getUbiStatsClicks(1,1,1);
         var hotspotInstanceId = "toripolliisi-1";
@@ -79,8 +100,56 @@ var WebRocketApplication = IApplication.$extend(
         {
             this.log.info("Server messaged it is ready");
         }
-    }
+    },
+	onAssetTransferCompleted : function (asset)
+	{
+		var obj = asset.data;
+		console.log( "hotspot length is "+obj.hotspots.length );	
+		
+		for (var i = 0; i < obj.hotspots.length; i++)
+        {
+		
+			console.log( "latitude is "+obj.hotspots[i].lat+" longitude is "+obj.hotspots[i].lon );	
+			
+			//getting the position from the hotspot json object.
+			var pos = Tundra.plugins.meshmoonGeo.coordinates.latLonToWorldPosition( parseFloat( obj.hotspots[i].lat ), parseFloat( obj.hotspots[i].lon ) );
+			//debugger;
+			console.log( "pos is ",pos);
+			
+			var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
+ 
+            entity.name = "ent_"+i;
+ 
+            entity.mesh.meshRef = "models/ubihotspot/ubi.mesh";
+            entity.mesh.materialRefs = [
+                "models/ubihotspot/default_Mat.material",
+				"models/ubihotspot/Mat.2.material",
+				"models/ubihotspot/Mat.3.material"
+                ];
+ 
+            entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
+            entity.placeable.setScale(new THREE.Vector3(0.01, 0.01, 0.01));
+			entity.placeable.setRotation(new THREE.Vector3(130, 90, 50));
+			
+			//entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
+            //entity.placeable.setScale(new THREE.Vector3(0.1, 0.1, 0.1));
+			//entity.placeable.setRotation(new THREE.Vector3(150, 100, 50));
+			
+		}
+	}
 });
+function parseCoord(lat, lon)
+{
+    var coord = {};
+    
+    if (!isNaN(lon))
+        coord.lon = lon;
+ 
+    if (!isNaN(lat))
+        coord.lat = lat;
+ 
+    return coord;
+}
 
 // Start the application by instantiating it
 var webRocketApplication = new WebRocketApplication();
