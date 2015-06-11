@@ -29,9 +29,13 @@ var WebRocketApplication = IApplication.$extend(
     onDependenciesLoaded : function()
     {
         console.log("Dependencies Loaded");
-        console.log("test 123: ",tester());
 
-        getUbiStatsClicks(1,1,1);
+        // get ubi stats
+        //getUbiStatsClicks(1,1,1);
+        var hotspotInstanceId = "toripolliisi-1";
+        getUbiStatsClicksLastDay(hotspotInstanceId);
+        getUbiStatsServicesLastDay(hotspotInstanceId);
+        getUbiStatsFacesLastDay(hotspotInstanceId);
     },
 
     /** 
