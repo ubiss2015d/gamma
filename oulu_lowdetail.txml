@@ -1770,6 +1770,8 @@
    <attribute value="true" type="bool" id="useGravity" name="Use gravity"/>
   </component>
  </entity>
+
+
  <entity id="75" sync="true">
   <component typeId="26" type="Name" sync="true">
    <attribute value="AdminoAvatarManager" type="string" id="name" name="Name"/>
@@ -1791,6 +1793,8 @@
    <attribute value="-40" type="real" id="Spawn z" name="Spawn z"/>
   </component>
  </entity>
+
+
  <entity id="76" sync="true">
   <component typeId="26" type="Name" sync="true">
    <attribute value="hotspot" type="string" id="name" name="Name"/>
@@ -1815,4 +1819,29 @@
    <attribute value="false" type="bool" id="useInstancing" name="Use instancing"/>
   </component>
  </entity>
+
+
+  <entity id="999" sync="true">
+  <component typeId="26" type="Name" sync="true">
+   <attribute value="Application: DualRealityOulu" type="string" id="name" name="Name"/>
+   <attribute value="" type="string" id="description" name="Description"/>
+   <attribute value="Applications" type="string" id="group" name="Group"/>
+  </component>
+  <component typeId="5" type="Script" sync="true" name="Desktop">
+   <attribute value="app-server-and-rocket.js" type="AssetReferenceList" id="scriptRef" name="Script ref"/>
+   <attribute value="true" type="bool" id="runOnLoad" name="Run on load"/>
+   <attribute value="0" type="int" id="runMode" name="Run mode"/>
+   <attribute value="" type="string" id="applicationName" name="Script application name"/>
+   <attribute value="" type="string" id="className" name="Script class name"/>
+  </component>
+  <component typeId="5" type="Script" sync="true" name="Web">
+   <attribute value="app-web-rocket.webrocketjs" type="AssetReferenceList" id="scriptRef" name="Script ref"/>
+   <attribute value="true" type="bool" id="runOnLoad" name="Run on load"/>
+   <attribute value="1" type="int" id="runMode" name="Run mode"/>
+   <attribute value="" type="string" id="applicationName" name="Script application name"/>
+   <attribute value="" type="string" id="className" name="Script class name"/>
+  </component>
+ </entity>
+
+
 </scene>

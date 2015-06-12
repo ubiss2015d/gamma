@@ -46,19 +46,18 @@ var WebRocketApplication = IApplication.$extend(
             this.onTokboxConnectorLoaded();
         }.bind(this));
 
-
-
-
         /* Run Meshmoon GEO at Oulu city center
            You can change this coordinate to be anywhere in the world
            and Meshmoon GEO will do its best to visualize the location. */
+        
+        /*
         Tundra.plugins.meshmoonGeo.start({
             lat: 65.05932,
             lon: 25.46629
         });
- 
         // Setup default environment
         Tundra.plugins.meshmoonGeo.setupEnvironment();
+        */
 
         //this.ui.welcome.hide();
 
@@ -66,7 +65,7 @@ var WebRocketApplication = IApplication.$extend(
         this.divElement.css({
             "position" : "absolute",
             "padding"  : 25,
-            "top" : 250,
+            "top" : 100,
             "left" : 25,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
@@ -91,8 +90,8 @@ var WebRocketApplication = IApplication.$extend(
         this.ubivm.css({
             "position" : "absolute",
             "padding"  : 2,
-            "top" : 200,
-            "left" : 400,
+            "top" : 100,
+            "left" : 350,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
             "background-color" : "rgba(8,149,195,0.8)"
@@ -147,14 +146,14 @@ var WebRocketApplication = IApplication.$extend(
         this.ui.baseCSS = {
             "position" : "absolute",
             "padding"  : 25,
-            "top" : 150,
+            "top" : 25,
             "left" : 25,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
             "background-color" : "rgba(8,149,195,0.8)"
         };
 
-        this.ui.welcome = $("<div/>", { text : "Welcome to the 'UbiPEAK' application" });
+        this.ui.welcome = $("<div/>", { text : "Welcome to the 'UbiPEEK' application" });
         this.ui.welcome.css(this.ui.baseCSS);
         this.ui.welcome.hide();
 
@@ -200,6 +199,8 @@ var WebRocketApplication = IApplication.$extend(
             ];
         */
 
+            /* NOT NEEDED WHEN oulu_lowdetail.txml is loaded
+
             entity.mesh.meshRef = "http://tundra-blueshift.s3.amazonaws.com/koste/ubihotspot/Cube.001.mesh";
             entity.mesh.materialRefs = [
                 "http://tundra-blueshift.s3-eu-west-1.amazonaws.com/koste/ubihotspot/sides.material",
@@ -210,6 +211,7 @@ var WebRocketApplication = IApplication.$extend(
             entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
             entity.placeable.setScale(new THREE.Vector3(1, 1, 1));
             entity.placeable.setRotation(new THREE.Vector3(0, 0, 0));
+            */
 
             //entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
             //entity.placeable.setScale(new THREE.Vector3(0.01, 0.01, 0.01));
@@ -225,9 +227,14 @@ var WebRocketApplication = IApplication.$extend(
     onMousePress : function(event)
     {
         var r = Tundra.renderer.raycast();
-        if (r.entity)   
+        var clickedEntity = r.entity.name;
+        console.log("CLICKED ENTITY NAME = ", clickedEntity);
+
+        if (clickedEntity == "hotspot")   
         {
-            console.log("ubi clicked "+r.entity);
+            console.log("ubi clicked " + r.entity);
+
+            // get stats 
             getStatsByInstanceId("toripolliisi-1", this);
 
             this.ubivm.show();
@@ -294,8 +301,8 @@ var WebRocketApplication = IApplication.$extend(
                         TOKBOX_VIDEO_WINDOW.css({
                             "position" : "absolute",
                             "padding"  : 2,
-                            "top" : 10,
-                            "left" : 1200,
+                            "top" : 250,
+                            "left" : 25,
                             "font-family" : "RobotoDraft, Arial",
                             "color" : "white",
                             "background-color" : "rgba(8,149,195,0.8)"
@@ -313,7 +320,7 @@ var WebRocketApplication = IApplication.$extend(
         }
         else
         {
-            console.log("other click");
+            console.log("entity != hotspot");
             this.divElement.hide();
 
             this.ubivm.hide();

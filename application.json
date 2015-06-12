@@ -1,7 +1,7 @@
 {
-    "Name": "UbiPEAK",
-    "Description": "UBISS 2015 Workshop D - Team Gamma: A PEAK into reality",
-    "Txml": "virtual_oulu_scene.txml",
+    "Name": "UbiPEEK",
+    "Description": "UBISS 2015 Workshop D - Team Gamma: A PEEK into reality",
+    "Txml": "oulu_lowdetail.txml",
     "Img": "application.jpg",
     "SourceDir": "",
     "SourceWebRocket": "app-web-rocket.webrocketjs",
