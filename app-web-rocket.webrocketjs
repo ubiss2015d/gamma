@@ -8,6 +8,8 @@ var WebRocketApplication = IApplication.$extend(
     {
         this.$super("DualRealityOulu");
 
+        this.data = {};
+
         this.initUi();
 
         // Listen for client/server sent entity actions
@@ -15,14 +17,14 @@ var WebRocketApplication = IApplication.$extend(
 
         // Introduce client app to the server
         this.entity.exec(EntityAction.Server, _MSG_INTRODUCTION);
-		
+        
         /*
-		// Run RTS camera application
+        // Run RTS camera application
         this.rts = {};
         this.rts.ent = Tundra.client.runApplication("RTS", "meshmoon-applications://meshmoon/rts-camera/rts-camera.webrocketjs");
         this.rts.ent.script.onScriptStarted(function(entity, component, scriptAsset, app) {
         this.rts.app = app;
-		*/
+        */
 
         // Load additional script files (accessable globally)
         IApplication.loadDependencies(this, 
@@ -51,11 +53,33 @@ var WebRocketApplication = IApplication.$extend(
  
         // Setup default environment
         Tundra.plugins.meshmoonGeo.setupEnvironment();
+
+        //this.ui.welcome.hide();
+
+        this.divElement = $("<div/>"); //, { text : "Testing" }
+        this.divElement.css({
+            "position" : "absolute",
+            "padding"  : 25,
+            "top" : 400,
+            "left" : 25,
+            "font-family" : "RobotoDraft, Arial",
+            "color" : "white",
+            "background-color" : "rgba(8,149,195,0.8)"
+        });
+
+        this.divElement.hide();
+        this.framework.ui.addWidgetToScene(this.divElement);
+        console.log(Tundra.ui.add(this.divElement));
+        //this.divElement.fadeIn(100000);
+        
+        this.subscribeEvent(Tundra.input.onMousePress(this, this.onMousePress));
         
         console.log("parsing started.");
         //getting json from json file.
         var jsonData = Tundra.asset.requestAsset("hotspots.json");
         jsonData.onCompleted(this, this.onAssetTransferCompleted);
+
+
     },
 
     onDependenciesLoaded : function()
@@ -123,47 +147,66 @@ var WebRocketApplication = IApplication.$extend(
             this.log.info("Server messaged it is ready");
         }
     },
-	onAssetTransferCompleted : function (asset)
-	{
-		var obj = asset.data;
-		console.log( "hotspot length is "+obj.hotspots.length );	
-		
-		for (var i = 0; i < obj.hotspots.length; i++)
+    onAssetTransferCompleted : function (asset)
+    {
+        var obj = asset.data;
+        console.log( "hotspot length is "+obj.hotspots.length );    
+        
+        for (var i = 0; i < obj.hotspots.length; i++)
         {
-		
-			console.log( "latitude is "+obj.hotspots[i].lat+" longitude is "+obj.hotspots[i].lon );	
-			
-			//getting the position from the hotspot json object.
-			var pos = Tundra.plugins.meshmoonGeo.coordinates.latLonToWorldPosition( parseFloat( obj.hotspots[i].lat ), parseFloat( obj.hotspots[i].lon ) );
-			//debugger;
-			console.log( "pos is ", pos);
-			
+        
+            console.log( "latitude is "+obj.hotspots[i].lat+" longitude is "+obj.hotspots[i].lon ); 
+            
+            //getting the position from the hotspot json object.
+            var pos = Tundra.plugins.meshmoonGeo.coordinates.latLonToWorldPosition( parseFloat( obj.hotspots[i].lat ), parseFloat( obj.hotspots[i].lon ) );
+            //debugger;
+            console.log( "pos is ", pos);
+            
 
             /* 2015-06-11 _ 22:27 _ Note Nico: This needs to be replaced by
                 the new UBI Hotspot Model (needs to be exported properly, according
                 to Meshmoon slides using blender2ogre plugin)
             */
-			var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
+            var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
  
             entity.name = "ent_"+i;
  
             entity.mesh.meshRef = "models/ubihotspot/ubi.mesh";
             entity.mesh.materialRefs = [
                 "models/ubihotspot/default_Mat.material",
-				"models/ubihotspot/Mat.2.material",
-				"models/ubihotspot/Mat.3.material"
+                "models/ubihotspot/Mat.2.material",
+                "models/ubihotspot/Mat.3.material"
                 ];
  
             entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
             entity.placeable.setScale(new THREE.Vector3(0.01, 0.01, 0.01));
-			entity.placeable.setRotation(new THREE.Vector3(130, 90, 50));
-			
-			//entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
+            entity.placeable.setRotation(new THREE.Vector3(130, 90, 50));
+            
+            //entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
             //entity.placeable.setScale(new THREE.Vector3(0.1, 0.1, 0.1));
-			//entity.placeable.setRotation(new THREE.Vector3(150, 100, 50));
-			
-		}
-	}
+            //entity.placeable.setRotation(new THREE.Vector3(150, 100, 50));
+            
+        }
+    },
+
+    onMousePress : function(event)
+    {
+        var r = Tundra.renderer.raycast();
+        if (r.entity)   
+        {
+            console.log("ubi clicked "+r.entity);
+            this.divElement.text("UBI clicked");
+            this.divElement.show();
+        }
+        else
+        {
+            console.log("other click");
+            this.divElement.hide();
+        }
+            
+        
+    }
+
 });
 function parseCoord(lat, lon)
 {
