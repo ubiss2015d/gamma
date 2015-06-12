@@ -12,8 +12,15 @@ var session = null;
 
 function tokboxEstablishConnection()
 {
+
+/*
     console.log("TOKBOX EstablishConnection");
 
+
+    Tundra.asset.loadScript("https://static.opentok.com/webrtc/v2.2/js/opentok.min.js").done(function() {
+              
+    });
+*/
 /*
     $.getScript( "http://static.opentok.com/v2/js/opentok.min.js", function( data, textStatus, jqxhr ) {
       console.log( data ); // Data returned

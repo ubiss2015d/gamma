@@ -1,6 +1,7 @@
 
 var _MSG_INTRODUCTION    = "MSG_Action_Introduction";
-
+var FRAMEWORK_UI;
+var TOKBOX_VIDEO_WINDOW;
 
 var WebRocketApplication = IApplication.$extend(
 {
@@ -9,7 +10,9 @@ var WebRocketApplication = IApplication.$extend(
         this.$super("DualRealityOulu");
 
         this.data = {};
-
+        
+        FRAMEWORK_UI = this.framework.ui;
+        
         this.initUi();
 
         // Listen for client/server sent entity actions
@@ -42,6 +45,9 @@ var WebRocketApplication = IApplication.$extend(
         {
             this.onTokboxConnectorLoaded();
         }.bind(this));
+
+
+
 
         /* Run Meshmoon GEO at Oulu city center
            You can change this coordinate to be anywhere in the world
@@ -80,6 +86,21 @@ var WebRocketApplication = IApplication.$extend(
         jsonData.onCompleted(this, this.onAssetTransferCompleted);
 
 
+        this.ubivm = $('<iframe width="75%" height="75%" frameborder="0" vspace="0" hspace="0" marginwidth="0" marginheight="0" src="http://vm.node0002.ubioulu.fi"></iframe>'); //, { text : "Testing" }
+        //this.ubivm = $('<iframe style="background-color:transparent;overflow:hidden;" name="A1_iframe" id="A1_iframe" width="100%" height="100%" src="http://vm.node0002.ubioulu.fi/menu/menu.php?session_id=ebe818b3-a4a2-474c-9281-1a4290a97154&amp;instance_id=node0002&amp;session=node0002&amp;id=2105a291-1a54-457f-88d9-cf4dbbaa1c51&amp;browser=display&amp;proxyhost=vm.node0002.ubioulu.fi:8080" frameborder="0" vspace="0" hspace="0" marginwidth="0" marginheight="0"></iframe>');
+        this.ubivm.css({
+            "position" : "absolute",
+            "padding"  : 2,
+            "top" : 100,
+            "left" : 200,
+            "font-family" : "RobotoDraft, Arial",
+            "color" : "white",
+            "background-color" : "rgba(8,149,195,0.8)"
+        });
+
+        this.ubivm.hide();
+        this.framework.ui.addWidgetToScene(this.ubivm);
+        console.log(Tundra.ui.add(this.ubivm));
     },
 
     onDependenciesLoaded : function()
@@ -94,6 +115,7 @@ var WebRocketApplication = IApplication.$extend(
         // get ubi stats
         //getUbiStatsClicks(1,1,1);
         var hotspotInstanceId = "toripolliisi-1";
+        hotspotInstanceId = "rotuaari-east-1";
         getUbiStatsClicksLastDay(hotspotInstanceId);
         getUbiStatsServicesLastDay(hotspotInstanceId);
         getUbiStatsFacesLastDay(hotspotInstanceId);
@@ -162,7 +184,6 @@ var WebRocketApplication = IApplication.$extend(
             //debugger;
             console.log( "pos is ", pos);
             
-
             /* 2015-06-11 _ 22:27 _ Note Nico: This needs to be replaced by
                 the new UBI Hotspot Model (needs to be exported properly, according
                 to Meshmoon slides using blender2ogre plugin)
@@ -170,17 +191,29 @@ var WebRocketApplication = IApplication.$extend(
             var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
  
             entity.name = "ent_"+i;
- 
-            entity.mesh.meshRef = "models/ubihotspot/ubi.mesh";
+              
+        /* LOADING FROM LOCAL DOES NOT WORK FOR MYSTERIES REASONS
+            entity.mesh.meshRef      = "models/ubihotspot_ogre/Cube.001.mesh";
+            entity.mesh.materialRefs = [ "models/ubihotspot_ogre/front.material",
+                                            "models/ubihotspot_ogre/back.material",
+                                            "models/ubihotspot_ogre/sides.material"
+            ];
+        */
+
+            entity.mesh.meshRef = "http://tundra-blueshift.s3.amazonaws.com/koste/ubihotspot/Cube.001.mesh";
             entity.mesh.materialRefs = [
-                "models/ubihotspot/default_Mat.material",
-                "models/ubihotspot/Mat.2.material",
-                "models/ubihotspot/Mat.3.material"
-                ];
- 
+                "http://tundra-blueshift.s3-eu-west-1.amazonaws.com/koste/ubihotspot/sides.material",
+                "http://tundra-blueshift.s3-eu-west-1.amazonaws.com/koste/ubihotspot/front.material",
+                "http://tundra-blueshift.s3-eu-west-1.amazonaws.com/koste/ubihotspot/back.material"
+            ];
+
             entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
-            entity.placeable.setScale(new THREE.Vector3(0.01, 0.01, 0.01));
-            entity.placeable.setRotation(new THREE.Vector3(130, 90, 50));
+            entity.placeable.setScale(new THREE.Vector3(1, 1, 1));
+            entity.placeable.setRotation(new THREE.Vector3(0, 0, 0));
+
+            //entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
+            //entity.placeable.setScale(new THREE.Vector3(0.01, 0.01, 0.01));
+            //entity.placeable.setRotation(new THREE.Vector3(130, 90, 50));
             
             //entity.placeable.setPosition(new THREE.Vector3(pos.x, 1, pos.z));
             //entity.placeable.setScale(new THREE.Vector3(0.1, 0.1, 0.1));
@@ -197,14 +230,97 @@ var WebRocketApplication = IApplication.$extend(
             console.log("ubi clicked "+r.entity);
             this.divElement.text("UBI clicked");
             this.divElement.show();
+
+            this.ubivm.show();
+
+            if(TOKBOX_VIDEO_WINDOW)
+            {
+                TOKBOX_VIDEO_WINDOW.show();
+            }
+            else
+            {
+                Tundra.asset.loadScript("https://static.opentok.com/webrtc/v2.2/js/opentok.min.js").done(function() {
+                    console.log("TOKBOX EstablishConnection"); 
+
+                  if (OT.checkSystemRequirements() == 0) {
+                    console.log("TOKBOX " + "The client does not support WebRTC.");
+                  } else {
+                    // Replace apiKey and sessionId with your own values:
+                    session = OT.initSession(reskiNico_tokbox_apikey, reskiNico_tokbox_sessionID);
+                    session.on({
+
+                      connectionCreated: function (event) {
+                        connectionCount++;
+                        console.log("TOKBOX " + connectionCount + " connections.");
+
+                        console.log("TOKBOX event");
+                        console.log(event);
+                        console.log(event.connection.connectionId);
+                        //console.log(event.target.streams.toString());
+                        console.log("TOKBOX New stream in the session: " + event.stream.streamId);
+                      },
+
+                      connectionDestroyed: function (event) {
+                        connectionCount--;
+                        console.log("TOKBOX " + connectionCount + " connections.");
+                      },
+
+                       sessionDisconnected: function sessionDisconnectHandler(event) {
+                            // The event is defined by the SessionDisconnectEvent class
+                            console.log("Disconnected from the session.");
+                            document.getElementById('disconnectBtn').style.display = 'none';
+                            if (event.reason == "networkDisconnected") {
+                              alert("Your network connection terminated.")
+                            }
+                        },
+
+                        streamCreated: function(event)
+                        {
+                            session.subscribe(event.stream, "tokbox-element");
+                        }
+                    });
+
+                    // Replace token with your own value:
+                    session.connect(reskiNico_tokbox_sessionToken, function(error) {
+                      if (error) {
+                        OT.log("Unable to connect: ", error.message);
+                        console.log("TOKBOX Unable to connect");
+                      } else {
+                        //document.getElementById('disconnectBtn').style.display = 'block';
+                        console.log("TOKBOX Connected to the session.");
+                        connectionCount = 1;
+
+                        TOKBOX_VIDEO_WINDOW = $("<div/>", { id : "tokbox-element", text : "TOKBOX HERE" });
+                        //this.ubivm = $('<iframe style="background-color:transparent;overflow:hidden;" name="A1_iframe" id="A1_iframe" width="100%" height="100%" src="http://vm.node0002.ubioulu.fi/menu/menu.php?session_id=ebe818b3-a4a2-474c-9281-1a4290a97154&amp;instance_id=node0002&amp;session=node0002&amp;id=2105a291-1a54-457f-88d9-cf4dbbaa1c51&amp;browser=display&amp;proxyhost=vm.node0002.ubioulu.fi:8080" frameborder="0" vspace="0" hspace="0" marginwidth="0" marginheight="0"></iframe>');
+                        TOKBOX_VIDEO_WINDOW.css({
+                            "position" : "absolute",
+                            "padding"  : 2,
+                            "top" : 25,
+                            "left" : 1000,
+                            "font-family" : "RobotoDraft, Arial",
+                            "color" : "white",
+                            "background-color" : "rgba(8,149,195,0.8)"
+                        });
+
+                        TOKBOX_VIDEO_WINDOW.show();
+                        FRAMEWORK_UI.addWidgetToScene(TOKBOX_VIDEO_WINDOW);
+                        console.log(Tundra.ui.add(TOKBOX_VIDEO_WINDOW));
+                      }
+                    });
+                }
+            });
+        }
+
         }
         else
         {
             console.log("other click");
             this.divElement.hide();
-        }
-            
-        
+
+            this.ubivm.hide();
+
+            if(TOKBOX_VIDEO_WINDOW) TOKBOX_VIDEO_WINDOW.hide();
+        }   
     }
 
 });
