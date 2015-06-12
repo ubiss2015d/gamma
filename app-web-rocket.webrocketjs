@@ -66,7 +66,7 @@ var WebRocketApplication = IApplication.$extend(
         this.divElement.css({
             "position" : "absolute",
             "padding"  : 25,
-            "top" : 400,
+            "top" : 250,
             "left" : 25,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
@@ -91,8 +91,8 @@ var WebRocketApplication = IApplication.$extend(
         this.ubivm.css({
             "position" : "absolute",
             "padding"  : 2,
-            "top" : 100,
-            "left" : 200,
+            "top" : 200,
+            "left" : 400,
             "font-family" : "RobotoDraft, Arial",
             "color" : "white",
             "background-color" : "rgba(8,149,195,0.8)"
@@ -190,7 +190,7 @@ var WebRocketApplication = IApplication.$extend(
             */
             var entity = Tundra.scene.createLocalEntity(["Name", "Mesh", "Placeable"]);
  
-            entity.name = "ent_"+i;
+            entity.name = obj.hotspots[i].instance_id;
               
         /* LOADING FROM LOCAL DOES NOT WORK FOR MYSTERIES REASONS
             entity.mesh.meshRef      = "models/ubihotspot_ogre/Cube.001.mesh";
@@ -228,8 +228,7 @@ var WebRocketApplication = IApplication.$extend(
         if (r.entity)   
         {
             console.log("ubi clicked "+r.entity);
-            this.divElement.text("UBI clicked");
-            this.divElement.show();
+            getStatsByInstanceId("toripolliisi-1", this);
 
             this.ubivm.show();
 
@@ -295,8 +294,8 @@ var WebRocketApplication = IApplication.$extend(
                         TOKBOX_VIDEO_WINDOW.css({
                             "position" : "absolute",
                             "padding"  : 2,
-                            "top" : 25,
-                            "left" : 1000,
+                            "top" : 10,
+                            "left" : 1200,
                             "font-family" : "RobotoDraft, Arial",
                             "color" : "white",
                             "background-color" : "rgba(8,149,195,0.8)"

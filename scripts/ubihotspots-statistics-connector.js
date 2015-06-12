@@ -194,3 +194,77 @@ function getUbiStatsFacesRealtime(instanceId)
     // perform http request
     performHttpRequest(clickRequestURL);
 }
+
+function getStatsByInstanceId(instanceId, obj)
+{
+	var lastDay    = getLastDay();
+    var currentDay = getToday();
+	
+	//ws url for real time faces.
+	var facesRealtimeRequestURL = "http://stats.ubioulu.fi/hotspots/faces_realtime.php?instance_id="+instanceId;
+	facesRealtimeRequestURL = encodeURLForMeshmoonProject(facesRealtimeRequestURL, ".json");
+	
+	//ws url for faces.
+	var facesRequestURL = "http://stats.ubioulu.fi/hotspots/faces.php?from=" + lastDay +"&to=" + currentDay + "&instance_id=" + instanceId;
+    facesRequestURL = encodeURLForMeshmoonProject(facesRequestURL, ".json");
+	
+	//ws url for services.
+	var servicesRequestURL = "http://stats.ubioulu.fi/hotspots/services.php?from=" + lastDay +"&to=" + currentDay + "&instance_id=" + instanceId;
+    servicesRequestURL = encodeURLForMeshmoonProject(servicesRequestURL, ".json");
+	
+	//ws url for clicks.
+	var clickRequestURL = "http://stats.ubioulu.fi/hotspots/clicks.php?from=" + lastDay +"&to=" + currentDay + "&instance_id=" + instanceId;
+    clickRequestURL = encodeURLForMeshmoonProject(clickRequestURL, ".json");
+	
+	var realTimeFaces = "";
+	
+	$.getJSON(servicesRequestURL, function(data)
+    {
+		var html = "Hotspot : "+instanceId;
+		
+		var servicesFaces = " <br/> Services counts : ";
+		if(data.result == "")
+			servicesFaces+="0";
+		else
+			servicesFaces+=data.result;
+		
+		html+=servicesFaces;
+		
+		
+		$.getJSON(clickRequestURL, function(data)
+		{
+			var clicks = " <br/> Click counts : ";
+			if(data.result == "")
+				clicks+="0";
+			else
+				clicks+=data.result;
+			
+			html+=clicks;
+			
+			$.getJSON(facesRealtimeRequestURL, function(data)
+			{
+				var facesRealTime = " <br/> Real Time Faces counts : ";
+				if(data.result == "")
+					facesRealTime+="0";
+				else
+					facesRealTime+=data.result;
+				
+				html+=facesRealTime;
+				
+				$.getJSON(facesRequestURL, function(data)
+				{
+					var faces = " <br/> Faces counts : ";
+					if(data.result == "")
+						faces+="0";
+					else
+						faces+=data.result;
+					
+					html+=faces;
+					
+					obj.divElement.html(html);
+					obj.divElement.show();
+				});
+			});
+		});
+    });
+}
